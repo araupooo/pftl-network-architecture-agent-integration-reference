@@ -1,0 +1,29 @@
+REPRO START: 2026-11-21 22:00:28 WIB
+HEAD: 687e9efd2e330989eb72a9e1692b504a386e4e7b
+Python: Python 3.12.3
+=== run_all.sh ===
+python3: Python 3.12.3
+scripts: 7 python3 checks (see outputs/)
+--- running scripts/quorum_list.py -> outputs/quorum_list.log ---
+PASS quorum_list (see outputs/quorum_list.log)
+
+--- running scripts/peer_network_model.py -> outputs/peer_network_model.log ---
+PASS peer_network_model (see outputs/peer_network_model.log)
+
+--- running scripts/unl_overlap.py -> outputs/unl_overlap.log ---
+PASS unl_overlap (see outputs/unl_overlap.log)
+
+--- running scripts/manifest_flood.py -> outputs/manifest_flood.log ---
+PASS manifest_flood (see outputs/manifest_flood.log)
+
+--- running scripts/silent_network.py -> outputs/silent_network.log ---
+PASS silent_network (see outputs/silent_network.log)
+
+--- running scripts/partition_drill.py -> outputs/partition_drill.log ---
+PASS partition_drill (see outputs/partition_drill.log)
+
+--- running scripts/contract_conformance.py -> outputs/contract_conformance.log ---
+PASS contract_conformance (see outputs/contract_conformance.log)
+
+RUN_ALL RESULT: ALL CHECKS PASSED (7/7 scripts)
+REPRO END: 2026-11-21 22:00:29 WIB
