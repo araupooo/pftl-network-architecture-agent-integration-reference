@@ -5,13 +5,13 @@ check that tests it, the unedited log that records the result, and
 the pinned primary source. Labels: [FAKTA] verified with source +
 date, [ESTIMASI] modelled/reported number, [ANALISIS] interpretation.
 
-Verify an excerpt in the reference repository (substitute the real
-HEAD commit for `<commit>` after upload):
+Verify an excerpt in the reference repository at commit
+`c92413c29be86a9293eac854cac83ad4d8e8ade6`:
 
 ```
-https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/<commit>/scripts/quorum_list.py
-https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/<commit>/docs/NETWORK_ARCHITECTURE.md
-https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/<commit>/data/testnet_vl.json
+https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/c92413c29be86a9293eac854cac83ad4d8e8ade6/scripts/quorum_list.py
+https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/c92413c29be86a9293eac854cac83ad4d8e8ade6/docs/NETWORK_ARCHITECTURE.md
+https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/c92413c29be86a9293eac854cac83ad4d8e8ade6/data/testnet_vl.json
 ```
 
 Verify a postfiatd source excerpt against the postfiatd repository

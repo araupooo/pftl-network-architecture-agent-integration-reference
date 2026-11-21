@@ -7,10 +7,10 @@ against rippled `master` as fetched 2026-11-21. Web pages were accessed
 2026-11-21 unless noted.
 
 Verify an excerpt in the public repository with the blob pattern
-(replace `<commit>` with the repository's HEAD commit after upload):
+(commit `c92413c29be86a9293eac854cac83ad4d8e8ade6`; the linked files are unchanged at the submitted HEAD):
 
 ```
-https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/<commit>/path/to/file#Lx-Ly
+https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/c92413c29be86a9293eac854cac83ad4d8e8ade6/path/to/file#Lx-Ly
 ```
 
 ## Local code — postfiatd `0085a1ff`
@@ -44,9 +44,8 @@ https://github.com/araupooo/pftl-network-architecture-agent-integration-referenc
 Two blob-link patterns apply, and they point at different repositories:
 
 - **This reference's own files** (scripts, docs, data, outputs) — verify
-  in the reference repository after upload, substituting the real HEAD
-  commit for `<commit>`:
-  `https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/<commit>/scripts/quorum_list.py`
+  in the reference repository at commit `c92413c29be86a9293eac854cac83ad4d8e8ade6`:
+  `https://github.com/araupooo/pftl-network-architecture-agent-integration-reference/blob/c92413c29be86a9293eac854cac83ad4d8e8ade6/scripts/quorum_list.py`
 - **postfiatd source excerpts** (L1–L23 above) — the postfiatd source
   files themselves are not vendored in this reference; verify them
   against the postfiatd repository at commit `0085a1ff`, e.g.:

@@ -62,7 +62,13 @@ Determinism notes:
 
 ## This run
 
-<!-- Filled in after the fresh-clone reproduction run. Record: date,
-machine, Python version, run_all.sh result, sha256sum -c result, and
-whether outputs/ matched byte-for-byte (except the repo-root line).
-Do not edit any other part of this file. -->
+- Date: 2026-11-21, 22:00:28-22:00:29 WIB (fresh clone, this VM, Linux).
+- Clone HEAD: `687e9efd2e330989eb72a9e1692b504a386e4e7b` ("Add unedited run logs").
+- Python: 3.12.3 (same as the reference run).
+- `bash scripts/run_all.sh`: exit 0, `RUN_ALL RESULT: ALL CHECKS PASSED (7/7 scripts)`.
+- `sha256sum -c SHA256SUMS`: all 25 files OK (run after `run_all.sh`, so the
+  regenerated logs were hashed too).
+- `outputs/` comparison: all 8 regenerated logs byte-identical to the shipped
+  logs (`diff -r` clean, no differences). No `FAIL` in any log.
+- Full repro log: `repro/fresh-clone-run.log`
+  (SHA-256 `0e3d217bc980b60bb0068eb34b87483e7d155963c002c0fd46c7904f042439ef`).
