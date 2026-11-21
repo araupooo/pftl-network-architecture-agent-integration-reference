@@ -1,0 +1,27 @@
+== peer_network_model: deterministic gossip over pinned parameters ==
+seed=20261120; maxPeers=21 (out 10 / in 11); backoff=[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+
+topology N=25: min degree=10, max degree=16, mean degree=11.60
+PASS TOPOLOGY: no node exceeds 21 peers
+PASS TOPOLOGY: every node has at least 10 peers (its outbound set)
+PASS TOPOLOGY: the graph is connected (single component)
+propagation from node 0: 25/25 informed in 2 rounds, max 2 hops
+PASS PROPAGATION: a validation reaches all 25 validators
+PASS PROPAGATION: reaches all validators within the 5 s ledger cadence -- 2 rounds (1 s each) <= 5 s
+propagation worst source: 2 rounds
+PASS PROPAGATION: worst-case source still reaches all within 5 s -- worst=2 rounds
+propagation with 5 squelched relays: 25/25 in 2 rounds
+PASS SQUELCH: 5 squelched relays do not prevent full propagation
+
+-- churn: 4 validators drop at round 0, reconnect per backoff --
+drop schedule (node: backoff s): {3: 1, 7: 2, 11: 5, 19: 13}
+validators alive during churn: 21; quorum (67%) = 17
+PASS CHURN: 21 alive validators still exceed the 17 quorum
+PASS CHURN: backoff values are the Fibonacci sequence from Tuning.h
+longest reconnect backoff in this churn: 13 s (node 19, 6th retry)
+
+-- send-queue bound (Overlay Tuning.h) --
+dropSendQueue=192, targetSendQueue=128, checkIdlePeers=4 s
+PASS QUEUE: target (128) is below the drop threshold (192)
+
+NETWORK RESULT: ALL CHECKS PASSED

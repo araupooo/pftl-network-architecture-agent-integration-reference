@@ -1,0 +1,43 @@
+== quorum_list: ValidatorList::calculateQuorum re-derivation ==
+postfiatd: max(ceil(effective*0.67), ceil(total*0.6))
+upstream : max(ceil(effective*0.8),  ceil(total*0.6))
+
+live testnet UNL N=25: postfiatd quorum=17, upstream quorum=20, gap=3
+PASS TESTNET: postfiatd quorum at N=25 is 17 -- max(ceil(25*0.67)=17, ceil(25*0.6)=15)
+PASS TESTNET: upstream quorum at N=25 is 20 -- max(ceil(25*0.8)=20, ceil(25*0.6)=15)
+PASS TESTNET: trusted-list size at N=25 is 125% of quorum (single list: all trusted) -- ceil(17*1.25)=22 (multi-list rule, ValidatorList.h:170)
+PASS FLOOR: at N=2 the quorum equals the 60% floor (2) under both rules -- postfiatd max(ceil(1.34)=2, ceil(1.2)=2)=2; upstream max(ceil(1.6)=2, 2)=2
+PASS FLOOR: postfiatd quorum never drops below 60% of total (N=1..200)
+PASS FLOOR: upstream quorum never drops below 60% of total (N=1..200)
+PASS DIVERGENCE: postfiatd quorum <= upstream quorum for every N=1..200
+PASS DIVERGENCE: postfiatd quorum is strictly lower for N>=4 except N=5, N=6 -- N=5: ceil(5*0.67)=4 = ceil(5*0.8)=4; N=6: ceil(6*0.67)=5 = ceil(6*0.8)=5 (the 60% floor and ceiling rounding coincide)
+
+-- offline tolerance (validators that can go dark, quorum still met) --
+N=25: postfiatd tolerates 8 offline (32%); upstream tolerates 5 offline (20%)
+N=35: postfiatd tolerates 11 offline (31%); upstream tolerates 7 offline (20%)
+N=100: postfiatd tolerates 33 offline (33%); upstream tolerates 20 offline (20%)
+PASS TOLERANCE: at N=25 postfiatd tolerates 8 offline, upstream 5
+PASS TOLERANCE: at N=35 postfiatd tolerates 11 offline, upstream 7
+
+-- fork-safety margin (unique validators two UNLs may have) --
+postfiatd qi=0.67*ni: two UNLs may have < 0.33*ni unique validators
+upstream  qi=0.80*ni: two UNLs may have < 0.20*ni unique validators
+PASS MARGIN: 0.33*25 = 8.25 unique validators allowed under 67%
+PASS MARGIN: 0.20*25 = 5.0 unique validators allowed under 80%
+PASS MARGIN: the 67% rule admits 3.25 more unique validators at N=25
+
+== quorum table (N, postfiatd, upstream) ==
+   N  postfiatd  upstream
+   1          1         1
+   2          2         2
+   3          3         3
+   5          4         4
+  10          7         8
+  16         11        13
+  25         17        20
+  35         24        28
+  36         25        29
+ 100         67        80
+ 200        134       160
+
+QUORUM RESULT: ALL CHECKS PASSED

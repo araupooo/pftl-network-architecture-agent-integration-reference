@@ -1,0 +1,22 @@
+== manifest_flood: reject-when-full (XRPL 3.3.0) vs evict-oldest (1.0.6) ==
+bound=1000 keys; manifest cap=512 B (was 4096 B); legacy drain 268435455 B / 300 s
+
+PASS CAP: a 512-byte manifest is admitted
+PASS CAP: a 513-byte manifest is rejected (padding no longer works)
+PASS CAP: the old 4 KiB cap admitted 8x larger manifests
+PASS DRAIN: legacy drain accepts up to 256 MiB - 1
+PASS DRAIN: legacy drain window is 300 s (was 60 s)
+policy reject-when-full: flood of 2500 unlisted keys -> admitted=1000, rejected=1500, set size=1000
+PASS FLOOD[reject-when-full]: set never exceeds the 1000-key bound
+policy reject-when-full: newcomer mid-flood -> rejected-bound-full; still present after the flood -> False
+PASS DISCOVERY[reject-when-full]: newcomer is refused once the set is full
+policy evict-oldest: flood of 2500 unlisted keys -> admitted=2500, rejected=0, set size=1000
+PASS FLOOD[evict-oldest]: set never exceeds the 1000-key bound
+policy evict-oldest: newcomer mid-flood -> admitted-evicted-oldest; still present after the flood -> False
+PASS DISCOVERY[evict-oldest]: newcomer is admitted mid-flood
+PASS DISCOVERY[evict-oldest]: newcomer is churned out by the next 1000 flood arrivals (present after flood: False) -- evict-oldest keeps the node from going blind at arrival, but discovery is not durable under a sustained flood
+
+-- listed keys are never bounded or evicted (hotfix doc) --
+PASS LISTED: the bound applies to unlisted keys only (documented) -- docs/MANIFEST_FLOOD_HOTFIX.md: 'Listed keys are never bounded or evicted'
+
+FLOOD RESULT: ALL CHECKS PASSED

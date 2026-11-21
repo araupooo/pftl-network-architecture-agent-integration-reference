@@ -1,0 +1,18 @@
+== contract_conformance: proposed agent-integration contract ==
+contract version: pf.contract.v1-proposal (PROPOSAL — no public spec exists)
+evidence kinds: ['commit', 'text', 'url']; sequence: 6 events
+
+PASS POSITIVE: the observed flow sequence conforms to the proposed contract -- 0 violations
+PASS POSITIVE: the sequence carries all three observed evidence kinds
+PASS POSITIVE: the settlement event carries all five required fields
+PASS NEGATIVE: settlement without tx_hash is rejected -- 1 violation(s): event 5: settlement tx_hash is not 64 hex chars
+PASS NEGATIVE: evidence kind 'screenshot' is rejected -- 1 violation(s): event 2 evidence 0: kind 'screenshot' not in url/commit/text (R2)
+PASS NEGATIVE: settlement before verification response is rejected -- 1 violation(s): event 4: settlement while 1 verification request(s) unanswered (R5)
+PASS NEGATIVE: two responses to one request is rejected -- 1 violation(s): event 5: verification response with no open request
+PASS NEGATIVE: completion_score 101 is rejected -- 1 violation(s): event 5: settlement completion_score missing or outside 0-100: 101
+PASS NEGATIVE: delivery with no evidence is rejected -- 1 violation(s): event 2: delivery carries no evidence items
+
+-- liveness: submitted, no platform message -> flagged, not assumed done --
+PASS LIVENESS: a sequence ending at delivery has no violations of shape, but carries no settlement -- shape-conformant yet incomplete: the harness reports 'no settlement event', it does not infer one
+
+CONTRACT RESULT: ALL CHECKS PASSED

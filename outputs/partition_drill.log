@@ -1,0 +1,19 @@
+== partition_drill: halt-not-fork under the 67% quorum ==
+UNL N=25; quorum postfiatd=17; upstream=20
+
+PASS PARTITION: 6 of 25 offline (24%) -> HALT under 80% (19 < 20)
+PASS PARTITION: 6 of 25 offline (24%) -> PROGRESS under 67% (19 >= 17) -- the 67% rule tolerates a >20% outage that halts the 80% rule
+PASS PARTITION: 8 of 25 offline -> PROGRESS under 67% (17 >= 17)
+PASS PARTITION: 9 of 25 offline (36%) -> HALT under 67% (16 < 17)
+PASS PARTITION: 9 of 25 offline -> HALT under 80% as well
+PASS PARTITION: 20 of 25 colluding (80%) -> INVALID-CONFIRMATION-POSSIBLE
+PASS PARTITION: 19 of 25 colluding (76%) -> not enough to confirm an invalid ledger (needs 20)
+
+-- partition: UNL splits 13 / 12 --
+side A: 13 validators; side B: 12 validators; no cross-partition traffic
+PASS SPLIT: side A (13) cannot reach quorum 17 -> HALT
+PASS SPLIT: side B (12) cannot reach quorum 17 -> HALT
+PASS SPLIT: neither side confirms a divergent ledger (halt, not fork)
+PASS FLOOR: quorum at N=25 is at least 60% of total (15)
+
+PARTITION RESULT: ALL CHECKS PASSED

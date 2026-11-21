@@ -1,0 +1,15 @@
+== silent_network: validation-publication liveness detector ==
+incident reference: height 93927173, 64 min, ~88000 tx delayed (reported, Feb 2025)
+detector threshold: 3 consecutive zero-validation ledgers while consensus advances
+
+PASS HEALTHY: 20 ledgers with 25 validations each -> no flag
+PASS BLIP: one ledger with 0 validations -> no flag
+PASS GAP-2: two consecutive zero-validation ledgers -> no flag
+PASS GAP-3: three consecutive zero-validation ledgers -> flag at 1002
+incident shape: 64 min at 3-5 s cadence = 768-1280 ledgers with 0 validations
+PASS INCIDENT: 64 min at 5 s cadence is 768 ledgers
+PASS INCIDENT: 64 min at 3 s cadence is 1280 ledgers
+PASS INCIDENT: the Feb 2025 shape flags at the freeze height
+PASS STALLED: 0 validations with consensus NOT advancing -> no SILENT-NETWORK flag (different failure class)
+
+SILENT RESULT: ALL CHECKS PASSED

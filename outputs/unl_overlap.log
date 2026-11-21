@@ -1,0 +1,37 @@
+== unl_overlap: live testnet validator list + overlap map ==
+source: vendored copy data/testnet_vl.json (fetched 2026-11-20, re-verified byte-identical to the live URL 2026-11-21)
+reference date (fixed): 2026-11-21
+list version: 2
+publisher key: ED3F1E0DA736FCF99BE2880A60DBD470715C0E04DD793FB862236B070571FC09E2
+PASS VL: publisher key matches the documented key in NodeSetup.md
+sequence: 30
+effective: 2026-11-17T20:10:08+00:00
+expiration: 2028-03-31T16:14:53+00:00
+validators in list: 25
+PASS VL: list carries 25 validators
+PASS VL: every validator carries a manifest
+PASS VL: sequence is 30
+PASS VL: list is effective at the reference date (effective < 2026-11-21 < expiration) -- effective 2026-11-17T20:10:08+00:00; expiration 2028-03-31T16:14:53+00:00
+PASS VL: all 25 validator keys are distinct
+PASS VL: all keys are ED-prefixed hex
+quorum at N=25: postfiatd 67% -> 17; upstream 80% -> 20
+PASS QUORUM: live list needs 17 of 25 under 67%
+PASS QUORUM: live list needs 20 of 25 under 80%
+
+-- Theorem 8 overlap map (two UNLs of size 25, p unique each side) --
+postfiatd 67%: pi+pj < 0.33*25 = 8.25  ->  p <= 4  ->  overlap >= 21
+upstream  80%: pi+pj < 0.20*25 = 5.0   ->  p <= 2  ->  overlap >= 23
+overlap O=25/25 (p=0 unique each side): fork-safe under 67%? True; under 80%? True
+overlap O=23/25 (p=2 unique each side): fork-safe under 67%? True; under 80%? True
+overlap O=22/25 (p=3 unique each side): fork-safe under 67%? True; under 80%? False
+overlap O=21/25 (p=4 unique each side): fork-safe under 67%? True; under 80%? False
+overlap O=20/25 (p=5 unique each side): fork-safe under 67%? False; under 80%? False
+overlap O=18/25 (p=7 unique each side): fork-safe under 67%? False; under 80%? False
+PASS OVERLAP: O=25 (identical UNLs) is fork-safe under both rules
+PASS OVERLAP: O=23 is fork-safe under 80% (2p=4 < 5.0)
+PASS OVERLAP: O=22 is fork-safe under 67% (2p=6 < 8.25) but NOT under 80% (6 > 5.0)
+PASS OVERLAP: O=21 is the minimum fork-safe overlap under 67% (2p=8 < 8.25)
+PASS OVERLAP: O=20 is NOT fork-safe under 67% (2p=10 > 8.25)
+PASS OVERLAP: the 67% rule admits 2 more unique validators per side than 80% (4 vs 2)
+
+OVERLAP RESULT: ALL CHECKS PASSED
